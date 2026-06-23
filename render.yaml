@@ -1,0 +1,14 @@
+# render.yaml — 讓 Render 自動讀取設定（可選，也可在 Render 網頁上手動設定）
+services:
+  - type: web
+    name: badminton-coach
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 2 --bind 0.0.0.0:$PORT --timeout 120
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true        # Render 自動產生隨機值
+      - key: DATABASE_URL
+        sync: false                # 手動在 Render 面板填入 Supabase 連線字串
+      - key: FLASK_DEBUG
+        value: false

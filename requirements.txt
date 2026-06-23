@@ -1,0 +1,29 @@
+# ── Web 框架 ──────────────────────────────────────────────────
+Flask==3.1.1
+flask_sqlalchemy==3.1.1
+Flask-WTF==1.2.2
+Flask-Limiter==3.9.0
+Werkzeug==3.1.3
+itsdangerous==2.2.0
+SQLAlchemy==2.0.36
+
+# ── 資料庫驅動（Supabase PostgreSQL）── 取代原本的 pymysql ──
+psycopg2-binary==2.9.10
+
+# ── AI / 影像處理 ─────────────────────────────────────────────
+# opencv-python-headless：移除 GUI 相依，適合伺服器環境
+# 取代原本的 opencv-python（有 cv2.imshow 等視窗 API）
+opencv-python-headless==4.10.0.84
+mediapipe==0.10.21
+numpy==1.26.4
+
+# ── 環境變數 ──────────────────────────────────────────────────
+python-dotenv==1.0.1
+
+# ── 生產 WSGI 伺服器（取代 Flask 內建的 app.run）─────────────
+gunicorn==23.0.0
+
+# ── 已移除 ────────────────────────────────────────────────────
+# pymysql          → 改用 psycopg2-binary（PostgreSQL）
+# pyttsx3          → 需要音效裝置，雲端伺服器不支援，已移除
+# opencv-python    → 改用 opencv-python-headless（無 GUI 版）

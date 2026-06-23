@@ -1,0 +1,137 @@
+body{
+    background-color: rgb(25,137,100);
+    background-image: url("../images/11.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+/* 導覽列背景顏色為rgb(24, 112, 82) */
+.navbar {
+    background-color: rgb(24, 112, 82);
+    font-size: 22px;
+    font-weight: 400;
+}
+
+/* 字體顏色為#ffffff */
+  .navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+/* 移除超連結顏色和底線 */
+  .navbar-dark .navbar-nav .nav-link {
+    text-decoration: none;
+}
+
+/* a:hover效果 */
+.navbar-dark .navbar-nav .nav-link:hover {
+    opacity: 0.8;
+}
+
+.dropdown-toggle {
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+/* 將下拉式選單中的文字置中 */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    min-width: auto; /* 設置為 "auto" 以自動調整寬度 */
+    width: auto; /* 設置為 "auto" 以自動調整寬度 */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left: 0; /* 將下拉內容對齊到左側 */
+}
+/* 下拉項中的文字居中 */
+.dropdown-item {
+    text-align: center;
+    display: block; /* 確保文字佔據整個寬度 */
+    width: 100%; /* 將寬度設為 100% 以確保全寬 */
+}
+.dropdown-item:hover{
+    background-color: grey;
+    color: #ffffff;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    /* height: 100vh; */
+}
+
+.container-2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 35px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+    border: 3px solid #4682b4; /* 調整邊框寬度及顏色 */
+    box-sizing: border-box; /* 避免邊框導致內容尺寸變化 */
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.container a {
+    text-decoration: none;
+    user-select: none;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.container a:hover {
+    opacity: 0.9;
+}
+
+input[type="submit"] {
+    text-decoration: none;
+    user-select: none;
+    text-align: center;
+    background-color: #4682b4;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #4682b4;
+    border-radius: 5px;
+    transition: all 0.3s;
+    margin: 5px;
+}
+input[type="submit"]:hover {
+    background-color: #135589;
+    border-color: #135589;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #135589;
+}
+
+.container form {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+}

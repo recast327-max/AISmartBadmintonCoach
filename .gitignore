@@ -1,0 +1,22 @@
+# 環境變數（絕對不能上傳）
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# 上傳的影片（避免 repo 過大）
+static/uploads/*
+!static/uploads/.gitkeep
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

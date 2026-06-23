@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>紀錄詳情</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/view.css')}}">
+</head>
+<body>
+  <nav class="navbar navbar-expand-xl bg-dark navbar-dark" role="navigation">
+    <div class="container-fluid">
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="/">AI智慧羽球教練</a>
+      <div class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+              <a href="/menu" class="nav-link">選單</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="/explanation" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                說明
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/explanation">系統使用說明</a>
+                <a class="dropdown-item" href="/explanation_video">示範影片</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="/choose" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                選擇訓練方式
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/video">影片辨識</a>
+                <a class="dropdown-item" href="/realtime">即時辨識</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="/schedule" class="nav-link">進度表</a>
+            </li>
+        </ul>
+        {% if g.user %}
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a href="/choose" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ g.user.username }}</a>
+              <div class="dropdown-menu text-right">
+                <a class="dropdown-item" href="/logout">登出</a>
+              </div>
+            </li>
+          </ul>
+        {% else %}
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a href="/login" class="nav-link">登入</a>
+            </li>
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+      <span>紀錄詳情</span>
+  </div>
+  <div class="form-container">
+    <form action="/schedule" method="POST" role="form" name="form" id="form" enctype="multipart/form-data">
+        <input type="hidden" name="selected_id" value="{{ selected_id }}">
+
+        {% for player in players %}
+            {% if player.id == selected_id %}
+                <div class="form-group form-horizontal">
+                    <label for="name" class="label-white">編號</label>
+                    <input type="text" name="id" id="id" value="{{ loop.index }}" readonly>
+                </div>
+
+                <div class="form-group form-horizontal">
+                    <label for="name" class="label-white">姓名</label>
+                    <input type="text" name="name" id="name" value="{{ player.name }}" readonly>
+                </div>
+                <div class="form-group form-horizontal">
+                    <label for="shot" class="label-white">球種</label>
+                    <input type="text" name="name" id="name" value="{{ player.shot }}" readonly>
+                </div>
+                <div class="form-group form-horizontal">
+                    <label for="training_progress" class="label-white">訓練進度</label>
+                    <input type="text" name="training_progress" id="training_progress" value="{{ player.training_progress }}" readonly>
+                </div>
+                <div class="form-group form-horizontal">
+                    <label for="complete_progress" class="label-white">完成進度</label>
+                    <input type="text" name="complete_progress" id="complete_progress" value="{{ player.complete_progress }}" readonly>
+                </div>
+                <div class="form-group form-horizontal">
+                    <label for="percentage" class="label-white">百分比</label>
+                    <input type="text" name="percentage" id="percentage" value="{{ player.percentage }}%" readonly>
+                </div>
+                <div class="form-group form-horizontal">
+                    <label for="date" class="label-white">日期</label>
+                    <input type="datetime-local" name="date" id="date" value="{{ player.date }}" readonly>
+                </div>
+                <button type="submit" class="btn">
+                  <div>返回</div>
+                </button>
+            {% endif %}
+        {% endfor %}
+    </form>
+  </div>
+</body>
+</html>

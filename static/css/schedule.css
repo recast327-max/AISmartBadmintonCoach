@@ -1,0 +1,310 @@
+html {
+    font-size: 16px;
+}
+body {
+    background-color: rgb(25,137,100);
+    background-image: url("../images/11.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* 當螢幕寬度小於600像素時，文字的大小為16px。 */
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    /* font-family: Arial, sans-serif; */
+}
+/* 當螢幕寬度大於或等於600像素，且小於900像素時，文字的大小為18px。 */
+@media screen and (min-width: 600px) {
+    body {
+        font-size: 18px;
+    }
+}
+/* 當螢幕寬度大於或等於900像素時，文字的大小為20px。 */
+@media screen and (min-width: 900px) {
+    body {
+        font-size: 20px;
+    }
+}
+/* 導覽列背景顏色為rgb(24, 112, 82) */
+.navbar {
+    background-color: rgb(24, 112, 82);
+    font-size: 22px;
+    font-weight: 400;
+}
+
+/* 字體顏色為#ffffff */
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+/* 移除超連結顏色和底線 */
+.navbar-dark .navbar-nav .nav-link {
+    text-decoration: none;
+}
+
+/* a:hover效果 */
+.navbar-dark .navbar-nav .nav-link:hover {
+    opacity: 0.8;
+}
+
+.dropdown-toggle {
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+/* 將下拉式選單中的文字置中 */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    min-width: auto; /* 設置為 "auto" 以自動調整寬度 */
+    width: auto; /* 設置為 "auto" 以自動調整寬度 */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left: 0; /* 將下拉內容對齊到左側 */
+}
+/* 下拉項中的文字居中 */
+.dropdown-item {
+    text-align: center;
+    display: block; /* 確保文字佔據整個寬度 */
+    width: 100%; /* 將寬度設為 100% 以確保全寬 */
+}.dropdown-item:hover{
+    background-color: grey;
+    color: #ffffff;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.container {
+    /* background-color: rgb(135, 206, 235); */
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    /* margin: 5px; */
+    /* padding: 5px 100px; */
+    font-size: 3.5rem;
+}
+/* 使用媒體查詢針對平板電腦及以下尺寸的裝置設定樣式 */
+@media screen and (max-width: 768px) {
+    .container {
+      width: 90%;
+    }
+}
+/* 使用媒體查詢針對手機及以下尺寸的裝置設定樣式 */
+@media screen and (max-width: 480px) {
+    .container {
+      width: 100%;
+    }
+}
+/* .button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.button-container a,
+.button-container button {
+    background-color: yellow;
+    color: rgb(0, 0, 0);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    border: 2px solid rgb(0, 0, 0);
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.button-container a:hover,
+.button-container button:hover {
+    background-color: yellow;
+    color: green;
+} */
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.btn,
+.btn:focus {
+    position: relative;
+    min-width: 200px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition-duration: 0.4s;
+    box-shadow: 0 5px 15px #193047;
+    margin-right: 10px; /* 调整按钮之间的水平间距 */
+}
+
+.btn-add {
+    background-color: #16a085;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    padding: 10px 20px;
+}
+
+.btn-delete {
+    background-color: rgb(255, 101, 101);
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    padding: 10px 20px;
+}
+
+.btn:hover {
+    box-shadow: 0px 2px 10px 5px #1abc9c;
+}
+
+.btn:after {
+    content: "";
+    display: block;
+    position: absolute;
+    background: #1abc9c;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s;
+}
+
+.btn:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s;
+}
+
+.content {
+    /* background-color: rgb(202, 242, 255); */
+    text-align: center;
+    margin: 5px;
+}
+.content table {
+    width: 100%;
+    /* 將 table 的寬度設為 100%，可使其自適應螢幕寬度。同時，將 table-layout 設定為 fixed，可以確保表格列寬不會隨內容變化而變化。 */
+    /* table-layout: fixed; */
+    text-align: center;
+    border: 1px solid black;
+}
+/* 使用媒體查詢針對平板電腦及以下尺寸的裝置設定樣式 */
+@media screen and (max-width: 768px) {
+    .container table {
+      width: 90%;
+    }
+}
+/* 使用媒體查詢針對手機及以下尺寸的裝置設定樣式 */
+@media screen and (max-width: 480px) {
+    .container table {
+      width: 100%;
+    }
+}
+.content th {
+    text-align: center;
+    border: 1px solid rgb(255, 255, 255);
+    height: 40px;
+    line-height: 40px;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.content td {
+    text-align: center;
+    background-color: #ffffff;
+    border: 1.5px solid black;
+    height: 40px;
+    line-height: 40px;
+    font-size: 1rem; /* 調整文字大小 */
+}
+.content input[type="checkbox"]{
+    width: 16px;
+    height: 16px;
+}
+.back-top {
+    z-index: 99999;
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+    filter: Alpha(opacity=50);
+    width: 35px;
+    height: 35px;
+    border-radius: 12px;
+    border: 1px rgba(255, 255, 255, 0.6) solid;
+    box-shadow: 0px 0px 3px #ffffff;
+    transform: translateY(0%);
+    transition: all 0.2s linear;
+}
+
+.back-top:hover {
+    opacity: 0.8;
+    filter: Alpha(opacity=80);
+    box-shadow: 0px 0px 6px #ffffff;
+}
+
+.back-top.hide {
+    opacity: 0;
+    filter: Alpha(opacity=0);
+    transform: translateY(150%);
+}
+
+/* 按鈕群組樣式 */
+.button-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.button-group a{
+    color: inherit; /* 移除超連結顏色 */
+    text-decoration: none;  /* 移除超連結底線 */
+    color: white;
+}
+.action-button {
+    display: inline-block;
+    padding: 6px 12px; /* 調整按鈕內邊距 */
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    border: 1px solid #ffffff;
+    margin-right: 10px;
+    margin-top: 1px;
+    margin-bottom: 0.5px;
+}
+/* 最後一個按鈕不添加右邊距 */
+.action-button:last-child {
+    margin-right: 0;
+}
+
+.action-button:hover {
+    opacity: 0.9;
+}
+
+/* 不同按鈕的背景顏色 */
+.action-button:nth-child(1) {
+    background-color: #4682b4; /* Blue for "詳情" */
+}
+
+.action-button:nth-child(2) {
+    background-color: #FFC107; /* Yellow for "修改" */
+}
+
+.delete-button {
+    background-color: rgb(254, 80, 80); /* Red for "刪除" */
+}
