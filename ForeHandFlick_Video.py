@@ -11,7 +11,7 @@ def ForeHandFlick(file_filename):
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
     detector = PoseDetector()
-        text1 ='Elbow needs to be raised'
+    text1 ='Elbow needs to be raised'
     dir = 0
     count = 0
     while True:

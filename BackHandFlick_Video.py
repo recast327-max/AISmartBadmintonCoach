@@ -12,7 +12,7 @@ def BackHandFlick(file_filename):
     # 設定視窗大小與影片大小相同
     #初始化姿勢檢測器
     detector = PoseDetector()
-        text = 'Right foot needs to step left'
+    text = 'Right foot needs to step left'
     text1 ='Elbow needs to be raised'
 
     #初始化變量
