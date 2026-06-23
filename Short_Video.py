@@ -11,7 +11,7 @@ def Short(file_filename):
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
     detector = PoseDetector()
-        text='arms need to be straight'
+    text='arms need to be straight'
     dir = 0
     count = 0
     while True:
