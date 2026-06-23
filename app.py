@@ -72,7 +72,13 @@ app.config['SQLALCHEMY_ECHO'] = os.environ.get('SQLALCHEMY_ECHO', 'false').lower
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'pool_pre_ping': True,          # 自動偵測斷線並重連
     'pool_recycle': 280,            # Supabase 免費版 300 秒 idle 斷線，提前回收
-    'connect_args': {'sslmode': 'require'},   # Supabase 強制 SSL
+    # 'connect_args': {'sslmode': 'require'},   # Supabase 強制 SSL
+    'connect_args': {
+        'sslmode': 'require',
+        'options': '-c timezone=Asia/Taipei',
+    },
+    # Transaction mode pooler 需要關閉 prepared statements
+    'execution_options': {'no_parameters': True},
 }
 
 db = SQLAlchemy(app)
