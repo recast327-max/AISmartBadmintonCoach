@@ -1,91 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>系統使用說明</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/explanation.css')}}">
-  <nav class="navbar navbar-expand-xl bg-dark navbar-dark" role="navigation">
-    <div class="container-fluid">
-      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="/">AI智慧羽球教練</a>
-      <div class="collapse navbar-collapse" id="navbarToggler">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-              <a href="/menu" class="nav-link">選單</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="/explanation" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                說明
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/explanation">系統使用說明</a>
-                <a class="dropdown-item" href="/explanation_video">示範影片</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="/choose" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                選擇訓練方式
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/video">影片辨識</a>
-                <a class="dropdown-item" href="/realtime">即時辨識</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="/schedule" class="nav-link">進度表</a>
-            </li>
-        </ul>
-        {% if g.user %}
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a href="/choose" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ g.user.username }}</a>
-              <div class="dropdown-menu text-right">
-                <a class="dropdown-item" href="/logout">登出</a>
-              </div>
-            </li>
-          </ul>
-        {% else %}
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a href="/login" class="nav-link">登入</a>
-            </li>
-          </ul>
-        {% endif %}
+{% extends "_base.html" %}
+{% block title %}系統使用說明{% endblock %}
+{% block extra_style %}
+.page-top { background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%); padding:2rem 0 1.5rem; color:#fff; margin-bottom:2rem; }
+.page-top h1 { font-size:1.5rem; font-weight:700; }
+.exp-card { background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,.08); padding:2rem; max-width:680px; margin:0 auto 1.5rem; }
+.guide-step { display:flex; gap:1.25rem; align-items:flex-start; margin-bottom:1.75rem; }
+.guide-step:last-of-type { margin-bottom:0; }
+.step-badge { background:#0f172a; color:#fff; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; flex-shrink:0; }
+.step-content h4 { font-size:1rem; font-weight:700; margin:0 0 .35rem; }
+.step-content p { color:#64748b; font-size:.9rem; margin:0; line-height:1.6; }
+.shot-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.5rem; }
+{% endblock %}
+{% block content %}
+<div class="page-top"><div class="container"><h1>📖 系統使用說明</h1></div></div>
+<div class="container pb-5">
+  <div class="exp-card">
+    <h5 style="margin-bottom:1.5rem;">🎯 使用流程</h5>
+    <div class="guide-step">
+      <div class="step-badge">1</div>
+      <div class="step-content">
+        <h4>建立帳號並登入</h4>
+        <p>點擊右上角「註冊」，建立您的帳號，即可開始使用所有功能。</p>
       </div>
     </div>
-  </nav>
-</head>
-<body>
-
-  <div class="container">
-    <span>系統使用說明</span>
+    <div class="guide-step">
+      <div class="step-badge">2</div>
+      <div class="step-content">
+        <h4>選擇訓練方式</h4>
+        <p><strong>影片辨識：</strong>事先錄製您的訓練影片，上傳後 AI 進行動作分析。<br>
+           <strong>即時辨識：</strong>需在本機執行程式，使用攝影機即時辨識動作。</p>
+      </div>
+    </div>
+    <div class="guide-step">
+      <div class="step-badge">3</div>
+      <div class="step-content">
+        <h4>選擇訓練球種</h4>
+        <p>目前系統支援以下 6 種球種：</p>
+        <div class="shot-grid" style="margin-top:.5rem;">
+          <span class="badge-shot shot-正手長球">正手長球</span>
+          <span class="badge-shot shot-反手長球">反手長球</span>
+          <span class="badge-shot shot-正手小球">正手小球</span>
+          <span class="badge-shot shot-反手小球">反手小球</span>
+          <span class="badge-shot shot-正手挑球">正手挑球</span>
+          <span class="badge-shot shot-反手挑球">反手挑球</span>
+        </div>
+      </div>
+    </div>
+    <div class="guide-step">
+      <div class="step-badge">4</div>
+      <div class="step-content">
+        <h4>查看並記錄進度</h4>
+        <p>在「訓練進度表」中新增記錄，追蹤每個球種的訓練次數與完成進度。</p>
+      </div>
+    </div>
   </div>
-
-  <br>
-  <div class="flex">
-      <br>
-      <ol>
-        <div style="font-size: 20px;">本系統提供影片辨識和即時辨識:</div>
-          <ul>
-            <li><div style="font-size: 20px;">影片辨識功能請事先錄置影片</div></li>
-            <li><div style="font-size: 20px;">即時辨識功能請事先準備攝像裝置</div></li>
-          </ul>
-      </ol>
+  <div style="text-align:center;">
+    <a href="/explanation_video" class="btn btn-primary btn-lg">觀看示範影片 →</a>
   </div>
-  <a href="/explanation_video" class="btn">
-    <span>下一頁</span>
-    <svg width="13px" height="10px" viewBox="0 0 13 10">
-        <path d="M1,5 L11,5"></path>
-        <polyline points="8 1 12 5 8 9"></polyline>
-    </svg>
-  </a>
-
-</body>
-</html>
+</div>
+{% endblock %}

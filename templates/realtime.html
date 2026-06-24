@@ -1,95 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>即時辨識</title>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/realtime.css')}}">
-</head>
-<body>
-	<nav class="navbar navbar-expand-xl bg-dark navbar-dark" role="navigation">
-    <div class="container-fluid">
-      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="/">AI智慧羽球教練</a>
-      <div class="collapse navbar-collapse" id="navbarToggler">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-              <a href="/menu" class="nav-link">選單</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="/explanation" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                說明
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/explanation">系統使用說明</a>
-                <a class="dropdown-item" href="/explanation_video">示範影片</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="/choose" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                選擇訓練方式
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/video">影片辨識</a>
-                <a class="dropdown-item" href="/realtime">即時辨識</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="/schedule" class="nav-link">進度表</a>
-            </li>
-        </ul>
-        {% if g.user %}
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a href="/choose" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ g.user.username }}</a>
-              <div class="dropdown-menu text-right">
-                <a class="dropdown-item" href="/logout">登出</a>
-              </div>
-            </li>
-          </ul>
-        {% else %}
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a href="/login" class="nav-link">登入</a>
-            </li>
-          </ul>
-        {% endif %}
-      </div>
+{% extends "_base.html" %}
+{% block title %}即時辨識{% endblock %}
+{% block extra_style %}
+.page-top { background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%); padding:2rem 0 1.5rem; color:#fff; margin-bottom:2rem; }
+.page-top h1 { font-size:1.5rem; font-weight:700; }
+.info-card { background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,.08); padding:2rem; max-width:560px; margin:0 auto; }
+.cloud-notice { background:#fffbeb; border:1.5px solid #fbbf24; border-radius:10px; padding:1.25rem; margin-bottom:1.5rem; }
+.step { display:flex; gap:1rem; align-items:flex-start; padding:.85rem 0; border-bottom:1px solid #f1f5f9; }
+.step:last-of-type { border-bottom:none; }
+.step-num { background:#0f172a; color:#fff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0; margin-top:1px; }
+.step-text { font-size:.9rem; color:#374151; line-height:1.6; }
+.step-text code { background:#f1f5f9; padding:.1em .4em; border-radius:4px; font-size:.85em; color:#0f172a; }
+{% endblock %}
+{% block content %}
+<div class="page-top"><div class="container"><h1>🎥 即時辨識</h1></div></div>
+<div class="container pb-5">
+  <div class="info-card">
+    {% if cloud_mode %}
+    <div class="cloud-notice">
+      <strong>⚠️ 即時辨識需在本機執行</strong><br>
+      <span style="font-size:.88rem;color:#92400e;">即時攝影機功能需要存取本機攝影機，無法在雲端伺服器上運行。請依照以下步驟在本機使用。</span>
     </div>
-  </nav>
-
-	<div class="container">
-		<span>即時辨識</span>
-	</div>
-	<form action="/real_Time" method="POST" enctype="multipart/form-data">
-    <!-- <div class="select">
-			<label for="hand">請選擇慣用手:</label>
-			<select id="hand" name="hand">
-				<option value="右手">右手</option>
-				<option value="左手">左手</option>
-			</select>
-		</div> -->
-		<div class="select">
-			<label for="training_option">請選擇訓練項目:</label>
-			<select id="training_option" name="training_option">
-				<option value="正手長球">正手長球</option>
-				<option value="反手長球">反手長球</option>
-				<option value="正手小球">正手小球</option>
-				<option value="反手小球">反手小球</option>
-				<option value="正手挑球">正手挑球</option>
-				<option value="反手挑球">反手挑球</option>
-			</select>
-		</div>
-		<br>
-		<button type="submit" class="btn" data-hover="click me!" required>
-      <div>開始訓練</div>
-    </button>
-	</form>
-</body>
-</html>
+    {% endif %}
+    <h5 style="margin-bottom:1.25rem;">本機執行步驟</h5>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">確認已安裝 Python 與相依套件：<br><code>pip install -r requirements.txt</code></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">根據訓練項目，在終端機執行對應腳本：</div>
+    </div>
+    <div style="background:#0f172a;border-radius:8px;padding:1rem;margin:.5rem 0 1rem;font-family:monospace;font-size:.85rem;color:#86efac;line-height:1.8;">
+      python Long.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#94a3b8;"># 正手長球</span><br>
+      python Longbackhand.py &nbsp;<span style="color:#94a3b8;"># 反手長球</span><br>
+      python ForeShort.py &nbsp;&nbsp;&nbsp;<span style="color:#94a3b8;"># 正手小球</span><br>
+      python BackShort.py &nbsp;&nbsp;&nbsp;<span style="color:#94a3b8;"># 反手小球</span><br>
+      python ForeHandFlick.py <span style="color:#94a3b8;"># 正手挑球</span><br>
+      python BackHandFlick.py <span style="color:#94a3b8;"># 反手挑球</span>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">攝影機視窗會自動開啟，站在攝影機前開始練習即可</div>
+    </div>
+    <a href="/video" class="btn btn-primary btn-block mt-3">改用影片辨識</a>
+  </div>
+</div>
+{% endblock %}

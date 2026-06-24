@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AI 智慧羽球教練{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+        crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green:    #16a34a;
+      --green-dk: #15803d;
+      --dark:     #0f172a;
+      --surface:  #f1f5f9;
+      --card:     #ffffff;
+      --border:   #e2e8f0;
+      --text:     #0f172a;
+      --muted:    #64748b;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+      background: var(--surface);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    /* ── Navbar ── */
+    .navbar { background: var(--dark) !important; box-shadow: 0 2px 12px rgba(0,0,0,.4); padding: .6rem 1.2rem; }
+    .navbar-brand { font-weight: 700; font-size: 1.1rem; color: #fff !important; letter-spacing: .5px; }
+    .navbar-brand span { color: var(--green); }
+    .nav-link { color: rgba(255,255,255,.8) !important; font-size: .9rem; padding: .4rem .75rem !important; border-radius: 6px; transition: background .2s, color .2s; }
+    .nav-link:hover { background: rgba(255,255,255,.1); color: #fff !important; }
+    .navbar-toggler { border-color: rgba(255,255,255,.3); }
+    .dropdown-menu { background: #1e293b; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; margin-top: 4px; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+    .dropdown-item { color: rgba(255,255,255,.8); font-size: .9rem; padding: .5rem 1rem; border-radius: 6px; margin: 2px 4px; }
+    .dropdown-item:hover { background: rgba(22,163,74,.2); color: #fff; }
+    .badge-user { background: var(--green); color: #fff; padding: .35rem .8rem; border-radius: 20px; font-size: .82rem; font-weight: 500; }
+    /* ── Page header ── */
+    .page-header { background: linear-gradient(135deg, var(--dark) 0%, #1e3a5f 100%); color: #fff; padding: 2rem 0 1.5rem; margin-bottom: 2rem; }
+    .page-header h1 { font-size: 1.6rem; font-weight: 700; margin: 0; }
+    .page-header .breadcrumb { background: none; padding: 0; margin: .4rem 0 0; font-size: .85rem; }
+    .page-header .breadcrumb-item, .page-header .breadcrumb-item a { color: rgba(255,255,255,.6); }
+    .page-header .breadcrumb-item.active { color: rgba(255,255,255,.9); }
+    /* ── Cards ── */
+    .card { border: none; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+    .card-header { background: none; border-bottom: 1px solid var(--border); font-weight: 600; padding: 1rem 1.25rem; }
+    /* ── Buttons ── */
+    .btn-primary { background: var(--green); border-color: var(--green); font-weight: 500; border-radius: 8px; padding: .5rem 1.4rem; }
+    .btn-primary:hover { background: var(--green-dk); border-color: var(--green-dk); }
+    .btn-outline-primary { color: var(--green); border-color: var(--green); border-radius: 8px; }
+    .btn-outline-primary:hover { background: var(--green); border-color: var(--green); }
+    .btn-danger { border-radius: 8px; }
+    .btn-secondary { border-radius: 8px; background: #475569; border-color: #475569; }
+    .btn-sm { padding: .3rem .8rem; font-size: .82rem; }
+    /* ── Flash messages ── */
+    .flash-container { position: fixed; top: 70px; right: 1rem; z-index: 9999; width: 320px; }
+    .alert { border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,.15); border: none; font-size: .9rem; }
+    /* ── Shot badges ── */
+    .badge-shot { display: inline-block; padding: .3em .75em; border-radius: 20px; font-size: .78rem; font-weight: 500; white-space: nowrap; }
+    .shot-正手長球 { background: #dbeafe; color: #1d4ed8; }
+    .shot-反手長球 { background: #ede9fe; color: #6d28d9; }
+    .shot-正手小球 { background: #dcfce7; color: #15803d; }
+    .shot-反手小球 { background: #fef9c3; color: #a16207; }
+    .shot-正手挑球 { background: #fee2e2; color: #b91c1c; }
+    .shot-反手挑球 { background: #fce7f3; color: #be185d; }
+    /* ── Progress bar ── */
+    .progress { height: 8px; border-radius: 4px; background: #e2e8f0; }
+    .progress-bar { background: var(--green); border-radius: 4px; }
+    {% block extra_style %}{% endblock %}
+  </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/"><span>AI</span> 智慧羽球教練</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="/menu">選單</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">說明</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/explanation">系統使用說明</a>
+            <a class="dropdown-item" href="/explanation_video">示範影片</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">訓練</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/video">📹 影片辨識</a>
+            <a class="dropdown-item" href="/realtime">🎥 即時辨識</a>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/schedule">進度表</a></li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        {% if g.user %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+              <span class="badge-user">👤 {{ g.user.username }}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="/logout">🚪 登出</a>
+            </div>
+          </li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="/login">登入</a></li>
+          <li class="nav-item"><a class="btn btn-primary btn-sm ml-2 mt-1" href="/register">註冊</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Flash messages -->
+<div class="flash-container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in messages %}
+      <div class="alert alert-{{ 'success' if cat == 'success' else 'danger' if cat == 'danger' else 'info' }} alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+      </div>
+    {% endfor %}
+  {% endwith %}
+</div>
+
+{% block content %}{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+<script>setTimeout(()=>document.querySelectorAll('.alert').forEach(a=>$(a).alert('close')),4000);</script>
+{% block extra_script %}{% endblock %}
+</body>
+</html>

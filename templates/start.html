@@ -1,84 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>選擇訓練方式</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/start.css')}}">
-</head>
-<body>
-  <nav class="navbar navbar-expand-xl bg-dark navbar-dark" role="navigation">
-    <div class="container-fluid">
-      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="/">AI智慧羽球教練</a>
-      <div class="collapse navbar-collapse" id="navbarToggler">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-              <a href="/menu" class="nav-link">選單</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="/explanation" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                說明
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/explanation">系統使用說明</a>
-                <a class="dropdown-item" href="/explanation_video">示範影片</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="/choose" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                選擇訓練方式
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/video">影片辨識</a>
-                <a class="dropdown-item" href="/realtime">即時辨識</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="/schedule" class="nav-link">進度表</a>
-            </li>
-        </ul>
-        {% if g.user %}
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a href="/choose" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ g.user.username }}</a>
-              <div class="dropdown-menu text-right">
-                <a class="dropdown-item" href="/logout">登出</a>
-              </div>
-            </li>
-          </ul>
-        {% else %}
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a href="/login" class="nav-link">登入</a>
-            </li>
-          </ul>
-        {% endif %}
-      </div>
-    </div>
-  </nav>
-
-  <div class="container">
-    <span>選擇訓練方式</span>
-  </div>
-
-  <div class="button-container">
-    <a href="/video" class="round-button">
-      <img src="static/images/8.jpg" alt="ChooseImage" style="width:50%; height:35%; border-radius: 5%;">
-      影片辨識
+{% extends "_base.html" %}
+{% block title %}選擇訓練方式{% endblock %}
+{% block extra_style %}
+.page-hero { background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%); padding:2.5rem 0 2rem; color:#fff; text-align:center; margin-bottom:2.5rem; }
+.page-hero h1 { font-size:1.7rem; font-weight:700; }
+.choice-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; max-width:680px; margin:0 auto; }
+.choice-card { background:#fff; border-radius:16px; box-shadow:0 2px 16px rgba(0,0,0,.08); padding:2.5rem 2rem; text-align:center; text-decoration:none; color:inherit; transition:all .25s; border:2px solid transparent; display:block; }
+.choice-card:hover { transform:translateY(-5px); box-shadow:0 16px 48px rgba(0,0,0,.15); border-color:var(--green); text-decoration:none; color:inherit; }
+.choice-card .icon { font-size:4rem; display:block; margin-bottom:1.25rem; }
+.choice-card h3 { font-size:1.2rem; font-weight:700; margin-bottom:.5rem; }
+.choice-card p { color:#64748b; font-size:.9rem; margin:0; line-height:1.6; }
+{% endblock %}
+{% block content %}
+<div class="page-hero"><div class="container"><h1>🎯 選擇訓練方式</h1></div></div>
+<div class="container pb-5">
+  <div class="choice-grid">
+    <a href="/video" class="choice-card">
+      <span class="icon">📹</span>
+      <h3>影片辨識</h3>
+      <p>上傳您的訓練影片，AI 自動分析您的擊球動作與姿勢</p>
     </a>
-    <a href="/realtime" class="round-button">
-      <img src="static/images/9.jpg" alt="ChooseImage" style="width:50%; height:40%; border-radius: 5%;">
-      即時辨識
+    <a href="/realtime" class="choice-card">
+      <span class="icon">🎥</span>
+      <h3>即時辨識</h3>
+      <p>使用本機攝影機進行即時動作辨識，即時獲得姿勢回饋</p>
     </a>
   </div>
-
-
-</body>
-</html>
+</div>
+{% endblock %}

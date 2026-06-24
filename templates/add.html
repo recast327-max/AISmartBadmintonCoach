@@ -1,152 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>新增紀錄</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/add.css')}}">
-    <nav class="navbar navbar-expand-xl bg-dark navbar-dark" role="navigation">
-      <div class="container-fluid">
-          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a class="navbar-brand" href="/">AI智慧羽球教練</a>
-          <div class="collapse navbar-collapse" id="navbarToggler">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a href="/menu" class="nav-link">選單</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a href="/explanation" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    說明
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/explanation">系統使用說明</a>
-                    <a class="dropdown-item" href="/explanation_video">示範影片</a>
-                  </div>
-                </li>
-                <li class="nav-item dropdown">
-                  <a href="/choose" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    選擇訓練方式
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/video">影片辨識</a>
-                    <a class="dropdown-item" href="/realtime">即時辨識</a>
-                  </div>
-                </li>
-                <li class="nav-item">
-                  <a href="/schedule" class="nav-link">進度表</a>
-                </li>
-            </ul>
-            {% if g.user %}
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                  <a href="/choose" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ g.user.username }}</a>
-                  <div class="dropdown-menu text-right">
-                    <a class="dropdown-item" href="/logout">登出</a>
-                  </div>
-                </li>
-              </ul>
-            {% else %}
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  <a href="/login" class="nav-link">登入</a>
-                </li>
-              </ul>
-            {% endif %}
-          </div>
+{% extends "_base.html" %}
+{% block title %}新增訓練記錄{% endblock %}
+{% block extra_style %}
+.page-top { background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%); padding:2rem 0 1.5rem; color:#fff; margin-bottom:2rem; }
+.page-top h1 { font-size:1.5rem; font-weight:700; }
+
+.form-card { background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,.08); padding:2rem; max-width:560px; margin:0 auto; }
+.field-label { font-size:.85rem; font-weight:600; color:#374151; margin-bottom:.4rem; display:block; }
+.form-control, select.form-control { border-radius:8px; border:1.5px solid #e2e8f0; padding:.65rem 1rem; font-size:.92rem; transition:border .2s; }
+.form-control:focus, select.form-control:focus { border-color:#16a34a; box-shadow:0 0 0 3px rgba(22,163,74,.12); outline:none; }
+.form-actions { display:flex; gap:.75rem; margin-top:1.75rem; }
+
+{% endblock %}
+{% block content %}
+<div class="page-top"><div class="container"><h1>✏️ 新增訓練記錄</h1></div></div>
+<div class="container pb-5">
+  <div class="form-card">
+    <form action="/schedule" method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="form-group">
+        <label class="field-label">姓名</label>
+        <input type="text" name="name" class="form-control" placeholder="輸入姓名" required>
       </div>
-  </nav>
-</head>
-<body>
-    <div class="container">
-      <span>新增紀錄</span>
-
-      <div class="form-container">
-        <form action="/schedule" method="POST" role="form" name="form" id="form" enctype="multipart/form-data">
-          <input type="hidden" name="selected_id" value="{{ selected_id }}">
-          <input type="hidden" name="id" id="id">
-          <div class="form-group form-horizontal">
-              <label for="name" class="label-white">姓名</label>
-              <input type="text" name="name" required>
-          </div>
-
-          <div class="form-group form-horizontal">
-              <label for="shot" class="label-white">球種</label>
-              <select id="shot" name="shot" required>
-                  <option value="正手長球">正手長球</option>
-                  <option value="反手長球">反手長球</option>
-                  <option value="正手小球">正手小球</option>
-                  <option value="反手小球">反手小球</option>
-                  <option value="正手挑球">正手挑球</option>
-                  <option value="反手挑球">反手挑球</option>
-              </select>
-          </div>
-
-          <div class="form-group form-horizontal">
-              <label for="training_progress" class="label-white">訓練進度</label>
-              <input type="text" name="training_progress" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" title="請輸入數字" required>
-          </div>
-          <div class="form-group form-horizontal">
-              <label for="complete_progress" class="label-white">完成進度</label>
-              <input type="text" name="complete_progress" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" title="請輸入數字" required>
-          </div>
-          <div class="form-group form-horizontal">
-              <input type="hidden" name="percentage" id="percentage" readonly>
-          </div>
-
-          <div class="form-group form-horizontal">
-              <label for="date" class="label-white">日期</label>
-              <input type="datetime-local" name="date" required>
-          </div>
-          <button type="submit" id="submitBtn" class="btn">
-            <div>新增</div>
-          </button>
-        </form>
+      <div class="form-group">
+        <label class="field-label">球種</label>
+        <select name="shot" class="form-control" required>
+          <option value="正手長球">正手長球</option>
+          <option value="反手長球">反手長球</option>
+          <option value="正手小球">正手小球</option>
+          <option value="反手小球">反手小球</option>
+          <option value="正手挑球">正手挑球</option>
+          <option value="反手挑球">反手挑球</option>
+        </select>
       </div>
-    </div>
-    <!-- script -->
-    <script>
-      $(document).ready(function() {
-        $('#submitBtn').click(function() {
-          if (confirm("確定要新增嗎?")) {
-              // 用戶點擊了確認按鈕
-              // 在這裡新增執行刪除操作的程式碼
-          } else {
-              // 使用者點擊了取消按鈕
-              // 在這裡新增取消操作的程式碼
-          }
-        });
-      });
-    </script>
-    
-    <script>
-        // 取得相關欄位元素
-        var trainingInput = document.getElementById('training_progress');
-        var completeInput = document.getElementById('complete_progress');
-        var percentageInput = document.getElementById('percentage');
-
-        // 監聽training和complete欄位值變更事件
-        trainingInput.addEventListener('input', updatePercentage);
-        completeInput.addEventListener('input', updatePercentage);
-
-        // 更新百分比欄位的值
-        function updatePercentage() {
-            var trainingValue = parseFloat(trainingInput.value);
-            var completeValue = parseFloat(completeInput.value);
-            var percentageValue = (completeValue / trainingValue) * 100;
-
-            // 判斷計算得到的百分比是否有效（例如，避免除以0導致NaN或Infinity）
-            if (isNaN(percentageValue) || !isFinite(percentageValue)) {
-                percentageInput.value = '';
-            } else {
-                percentageInput.value = percentageValue.toFixed(2); // 保留兩位小數
-            }
-        }
-    </script>
-</body>
-</html>
+      <div class="form-row">
+        <div class="col form-group">
+          <label class="field-label">訓練次數（目標）</label>
+          <input type="number" name="training_progress" class="form-control" min="1" placeholder="例：100" required>
+        </div>
+        <div class="col form-group">
+          <label class="field-label">完成次數</label>
+          <input type="number" name="complete_progress" class="form-control" min="0" placeholder="例：65" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">訓練日期</label>
+        <input type="datetime-local" name="date" class="form-control" required>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary flex-fill">✅ 新增記錄</button>
+        <a href="/schedule" class="btn btn-secondary">取消</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,82 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>登入</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/login.css')}}">
-</head>
-<body>
-    <nav class="navbar navbar-expand-xl bg-dark navbar-dark" role="navigation">
-      <div class="container-fluid">
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="/">AI智慧羽球教練</a>
-        <div class="collapse navbar-collapse" id="navbarToggler">
-          <ul class="navbar-nav">
-              <li class="nav-item">
-                <a href="/menu" class="nav-link">選單</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a href="/explanation" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  說明
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/explanation">系統使用說明</a>
-                  <a class="dropdown-item" href="/explanation_video">示範影片</a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
-                <a href="/choose" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  選擇訓練方式
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/video">影片辨識</a>
-                  <a class="dropdown-item" href="/realtime">即時辨識</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a href="/schedule" class="nav-link">進度表</a>
-              </li>
-          </ul>
-          {% if g.user %}
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item dropdown">
-                <a href="/choose" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ g.user.username }}</a>
-                <div class="dropdown-menu text-right">
-                  <a class="dropdown-item" href="/logout">登出</a>
-                </div>
-              </li>
-            </ul>
-          {% else %}
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a href="/login" class="nav-link">登入</a>
-              </li>
-            </ul>
-          {% endif %}
-        </div>
-      </div>
-    </nav>
-    <div class="container">
-        <div class="container-2">
-            <h1>登入</h1>
-            <form action="/login" method="POST">
-                <p><input type="text" name="username" placeholder="輸入用戶名稱"></p>
-                <p><input type="password" name="password" placeholder="輸入密碼"></p>
-                <div class="button-container">
-                    <p><input type="submit" value="登入" class="login"></p>
-                    <p><a href="/register" class="register">註冊</a></p>
-                </div>
-            </form>
-        </div>
+{% extends "_base.html" %}
+{% block title %}登入 — AI 羽球教練{% endblock %}
+{% block extra_style %}
+.auth-wrap { min-height: calc(100vh - 56px); display:flex; align-items:center; justify-content:center; padding: 2rem 1rem; }
+.auth-card { background:#fff; border-radius:16px; box-shadow:0 8px 40px rgba(0,0,0,.12); padding:2.5rem 2rem; width:100%; max-width:420px; }
+.auth-logo { text-align:center; margin-bottom:2rem; }
+.auth-logo .icon { font-size:3rem; }
+.auth-logo h2 { font-size:1.5rem; font-weight:700; margin:.5rem 0 .25rem; }
+.auth-logo p { color:var(--muted); font-size:.9rem; }
+.form-label { font-size:.85rem; font-weight:600; color:#374151; margin-bottom:.4rem; display:block; }
+.form-control { border-radius:8px; border:1.5px solid #e2e8f0; padding:.65rem 1rem; font-size:.95rem; transition:border .2s; }
+.form-control:focus { border-color:#16a34a; box-shadow:0 0 0 3px rgba(22,163,74,.15); }
+.btn-login { width:100%; padding:.75rem; font-size:1rem; font-weight:600; border-radius:10px; background:#16a34a; border:none; color:#fff; cursor:pointer; transition:all .2s; }
+.btn-login:hover { background:#15803d; transform:translateY(-1px); }
+.divider { text-align:center; color:var(--muted); font-size:.85rem; margin:1.25rem 0; position:relative; }
+.divider::before,.divider::after { content:''; position:absolute; top:50%; width:40%; height:1px; background:#e2e8f0; }
+.divider::before { left:0; } .divider::after { right:0; }
+.register-link { display:block; text-align:center; background:#f1f5f9; border-radius:10px; padding:.7rem; color:#0f172a; font-weight:500; font-size:.9rem; text-decoration:none; transition:background .2s; }
+.register-link:hover { background:#e2e8f0; text-decoration:none; color:#0f172a; }
+{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="icon">🏸</div>
+      <h2>歡迎回來</h2>
+      <p>登入您的羽球教練帳號</p>
     </div>
-
-
-</body>
-</html>
+    <form action="/login" method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="form-group">
+        <label class="form-label">帳號</label>
+        <input type="text" name="username" class="form-control" placeholder="輸入帳號名稱" required autofocus>
+      </div>
+      <div class="form-group">
+        <label class="form-label">密碼</label>
+        <input type="password" name="password" class="form-control" placeholder="輸入密碼" required>
+      </div>
+      <button type="submit" class="btn-login">登入</button>
+    </form>
+    <div class="divider">還沒有帳號？</div>
+    <a href="/register" class="register-link">✨ 立即免費註冊</a>
+  </div>
+</div>
+{% endblock %}

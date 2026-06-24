@@ -1,85 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>選單</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/menu.css')}}">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-xl bg-dark navbar-dark" role="navigation">
-      <div class="container-fluid">
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="/">AI智慧羽球教練</a>
-        <div class="collapse navbar-collapse" id="navbarToggler">
-          <ul class="navbar-nav">
-              <li class="nav-item">
-                <a href="/menu" class="nav-link">選單</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a href="/explanation" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  說明
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/explanation">系統使用說明</a>
-                  <a class="dropdown-item" href="/explanation_video">示範影片</a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
-                <a href="/choose" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  選擇訓練方式
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/video">影片辨識</a>
-                  <a class="dropdown-item" href="/realtime">即時辨識</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a href="/schedule" class="nav-link">進度表</a>
-              </li>
-          </ul>
-          {% if g.user %}
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item dropdown">
-                <a href="/choose" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ g.user.username }}</a>
-                <div class="dropdown-menu text-right">
-                  <a class="dropdown-item" href="/logout">登出</a>
-                </div>
-              </li>
-            </ul>
-          {% else %}
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a href="/login" class="nav-link">登入</a>
-              </li>
-            </ul>
-          {% endif %}
-        </div>
-      </div>
-    </nav>
-    <br>
-    <div class="container">
-      <span>選單</span>
-    </div>
-    <div class="button-container">
-        <a href="/explanation" class="round-button">
-          <img src="static/images/5.jpg" alt="ExplanationImage" style="width:40%; height:40%; border-radius: 5%;">
-          <span>說明</span>
-        </a>
-        <a href="/schedule" class="round-button">
-          <img src="static/images/6.jpg" alt="ScheduleImage" style="width:50%; height:40%; border-radius: 5%;">
-          <span>進度表</span>
-        </a>
-        <a href="/choose" class="round-button">
-          <img src="static/images/10.jpg" alt="ChooseImage" style="width:80%; height:40%; border-radius: 5%;">
-          <span>選擇訓練方式</span>
-        </a>
-    </div>
-  </body>
-</html>
+{% extends "_base.html" %}
+{% block title %}選單{% endblock %}
+{% block extra_style %}
+.menu-hero { background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%); padding:3rem 0 2rem; color:#fff; text-align:center; margin-bottom:2.5rem; }
+.menu-hero h1 { font-size:1.8rem; font-weight:700; }
+.menu-hero p { color:rgba(255,255,255,.6); margin:.5rem 0 0; }
+.menu-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.25rem; }
+.menu-card { background:#fff; border-radius:16px; box-shadow:0 2px 16px rgba(0,0,0,.08); padding:2rem 1.5rem; text-align:center; text-decoration:none; color:inherit; transition:all .25s; border:2px solid transparent; display:block; }
+.menu-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,.15); border-color:var(--green); text-decoration:none; color:inherit; }
+.menu-card .icon { font-size:3.5rem; display:block; margin-bottom:1rem; }
+.menu-card h3 { font-size:1.15rem; font-weight:700; margin-bottom:.4rem; }
+.menu-card p { color:#64748b; font-size:.88rem; margin:0; }
+{% endblock %}
+{% block content %}
+<div class="menu-hero">
+  <div class="container">
+    <h1>🏸 主選單</h1>
+    <p>選擇您要進行的功能</p>
+  </div>
+</div>
+<div class="container pb-5">
+  <div class="menu-grid">
+    <a href="/explanation" class="menu-card">
+      <span class="icon">📖</span>
+      <h3>系統說明</h3>
+      <p>了解如何使用本系統，查看使用教學與示範影片</p>
+    </a>
+    <a href="/schedule" class="menu-card">
+      <span class="icon">📊</span>
+      <h3>訓練進度表</h3>
+      <p>記錄並追蹤您的訓練進度，管理各球種完成情況</p>
+    </a>
+    <a href="/choose" class="menu-card">
+      <span class="icon">🎯</span>
+      <h3>開始訓練</h3>
+      <p>上傳影片進行動作辨識，或使用即時攝影機訓練</p>
+    </a>
+  </div>
+</div>
+{% endblock %}
